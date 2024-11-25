@@ -508,7 +508,6 @@
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Contact</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -597,7 +596,7 @@
         <p>© <span>Copyright</span> <strong class="px-1 sitename">Chukwudi Portfolio</strong> <span>All Rights Reserved</span></p>
       </div>
       <div class="credits text-center">
-        Designed by <a href="Chuks.tech">Chukwudi</a>
+        Designed by <a href="https://chukstech.onrender.com">Chukwudi</a>
       </div>
   
     </div>
