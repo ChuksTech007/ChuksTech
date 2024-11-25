@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: Chuks-Portfolio
+    env: php
+    buildCommand: composer install
+    startCommand: php -S 0.0.0.0:8080 index.php
+    plan: free
