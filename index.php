@@ -521,7 +521,7 @@
                 <i class="bi bi-geo-alt flex-shrink-0"></i>
                 <div>
                   <h3>Address</h3>
-                  <p>!43 Ozuitem Street, Umuahia, Abia, Nigeria</p>
+                  <p>143 Ozuitem Street, Umuahia, Abia, Nigeria</p>
                 </div>
               </div><!-- End Info Item -->
 
