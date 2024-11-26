@@ -112,7 +112,7 @@
               <div class="col-lg-6">
                 <ul>
                   <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>8 March 2003</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>www.example.com</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span><a href="https://chukstech.onrender.com/">chukstech.onrender.com</a></span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>+234 706 069 1695</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Abia, Nigeria</span></li>
                 </ul>
