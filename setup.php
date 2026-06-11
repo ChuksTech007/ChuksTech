@@ -69,7 +69,7 @@ if ($useMongo) {
 
     } catch (\Exception $e) {
         echo "<p style='color:#f87171'>&#10007; MongoDB Error: " . htmlspecialchars($e->getMessage()) . "</p>";
-        echo "<p style='color:#94a3b8;font-size:13px'>Check your MONGODB_URI in .env and make sure your Atlas cluster is running.</p>";
+        echo "<p style='color:#94a3b8;font-size:13px'>Check your MONGODB_URI environment variable and ensure your Atlas cluster is running and Network Access allows 0.0.0.0/0.</p>";
     }
 
 } else {
@@ -144,7 +144,9 @@ $output = ob_get_clean();
   <div class="box">
     <h1>Portfolio Database Setup</h1>
     <p class="driver-hint">
-      <?= $useMongo ? '&#9654; Using <strong>MongoDB Atlas</strong> (MONGODB_URI detected in .env)' : '&#9654; Using <strong>MySQL</strong> (no MONGODB_URI in .env)' ?>
+      <?= $useMongo
+            ? '&#9654; Using <strong>MongoDB Atlas</strong> (MONGODB_URI detected in environment)'
+            : '&#9654; Using <strong>MySQL</strong> (no MONGODB_URI in environment &mdash; <a href="https://dashboard.render.com" target="_blank" style="color:#f87171">add it in Render Dashboard → Environment</a>)' ?>
     </p>
     <?= $output ?>
   </div>
