@@ -1,7 +1,24 @@
 services:
   - type: web
     name: Chuks-Portfolio
-    env: php
-    buildCommand: composer install
-    startCommand: php -S 0.0.0.0:8080 index.php
+    env: docker
     plan: free
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_SECURE
+        value: tls
+      - key: SMTP_FROM_NAME
+        value: Portfolio Contact
+      - key: SMTP_USERNAME
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+      - key: SMTP_TO
+        sync: false
