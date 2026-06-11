@@ -706,17 +706,18 @@ try {
     /* ===== RESPONSIVE ===== */
     @media (max-width: 991px) {
       #hero { padding-top: 120px; }
-      .hero-img-wrap { margin-top: 48px; }
+      .hero-img-wrap { margin-top: 48px; overflow: visible; }
       .hero-photo { max-width: 300px; height: 340px; }
       .hero-badge { bottom: -14px; left: 0; }
-      .hero-stat-wrap { top: 20px; right: -10px; }
+      .hero-stat-wrap { top: 20px; right: 8px; }
       .ft-socials { justify-content: flex-start; margin-top: 16px; }
       .info-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 576px) {
       section { padding: 70px 0; }
       .form-box { padding: 24px 18px; }
-      .hero-stat-wrap { display: none; }
+      .hero-stat-wrap { top: 12px; right: 8px; padding: 10px 14px; }
+      .hero-stat-wrap strong { font-size: 18px; }
     }
   </style>
 </head>
@@ -738,7 +739,7 @@ try {
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#hero">CC.</a>
+      <a class="navbar-brand" href="#hero">CCC.</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -819,7 +820,7 @@ try {
             Results-driven Full-Stack Developer and Backend Engineer with hands-on experience building production-grade systems across food delivery, fleet management, and education platforms. Proficient in Node.js, Laravel, PHP, Python, React, and Next.js, with strong database expertise across MySQL, MongoDB, and PostgreSQL.
           </p>
           <p style="color:var(--muted);font-size:15px;line-height:1.9;">
-            I'm also passionate about teaching — having mentored 20+ students and delivered institutional courses in PHP, Python, and modern frontend development. I combine technical depth with operational adaptability.
+            I'm also passionate about teaching, having mentored 20+ students and delivered institutional courses in PHP, Python, and modern frontend development. I combine technical depth with operational adaptability.
           </p>
           <div class="info-grid">
             <div class="info-cell">
@@ -1186,7 +1187,7 @@ try {
       <div class="text-center mb-5" data-aos="fade-up">
         <span class="sec-tag">What I Offer</span>
         <h2 class="sec-title">My <span>Services</span></h2>
-        <p class="sec-desc mx-auto">From backend systems to frontend interfaces to tech education — here's how I can help.</p>
+        <p class="sec-desc mx-auto">From backend systems to frontend interfaces to tech education, here's how I can help.</p>
       </div>
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
@@ -1200,14 +1201,14 @@ try {
           <div class="svc-card">
             <div class="svc-icon"><i class="bi bi-laptop"></i></div>
             <h4 class="svc-title">Full-Stack Web Development</h4>
-            <p class="svc-desc">End-to-end development of dynamic web apps — from database architecture to intuitive UI using React, Next.js, Laravel, and modern CSS frameworks.</p>
+            <p class="svc-desc">End-to-end development of dynamic web apps, from database architecture to intuitive UI using React, Next.js, Laravel, and modern CSS frameworks.</p>
           </div>
         </div>
         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
           <div class="svc-card">
             <div class="svc-icon"><i class="bi bi-plug"></i></div>
             <h4 class="svc-title">API Development &amp; Integration</h4>
-            <p class="svc-desc">Designing and integrating REST APIs, payment gateways (Paystack), notification services (Firebase, SMS), and cloud storage — reliable and well-documented.</p>
+            <p class="svc-desc">Designing and integrating REST APIs, payment gateways (Paystack), notification services (Firebase, SMS), and cloud storage, reliable and well-documented.</p>
           </div>
         </div>
         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
@@ -1389,7 +1390,7 @@ try {
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-6">
-          <div class="ft-logo">Charles-Chukwudi.</div>
+          <div class="ft-logo">Charles-Chukwudi Chukwudi.</div>
           <div class="ft-sub">Full-Stack Developer &nbsp;·&nbsp; Backend Engineer &nbsp;·&nbsp; Tech Educator</div>
         </div>
         <div class="col-md-6">
