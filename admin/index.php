@@ -215,20 +215,51 @@ tr:hover td{background:rgba(56,189,248,.03)}
 .actions-cell{display:flex;gap:6px;align-items:center}
 .id-col{color:var(--muted);font-size:12px}
 
+/* Mobile header */
+.mobile-header{display:none;position:fixed;top:0;left:0;right:0;height:60px;background:var(--bg2);border-bottom:1px solid var(--border);align-items:center;justify-content:space-between;padding:0 20px;z-index:200}
+.mobile-brand{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hamburger{background:none;border:1px solid var(--border);border-radius:8px;padding:7px 10px;cursor:pointer;color:var(--text);font-size:18px;line-height:1;transition:border-color .2s}
+.hamburger:hover{border-color:var(--accent)}
+
+/* Overlay */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150;backdrop-filter:blur(2px)}
+.sidebar-overlay.open{display:block}
+
 /* Responsive tweaks */
-@media(max-width:900px){
-  .sidebar{width:60px;padding:20px 10px}
-  .brand-sub,.nav-link span,.user-name,.brand{display:none}
-  .main{margin-left:60px;padding:20px}
+@media(max-width:768px){
+  .mobile-header{display:flex}
+  .sidebar{transform:translateX(-100%);transition:transform .28s cubic-bezier(.4,0,.2,1);top:0;z-index:160}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:80px 16px 24px}
   .form-grid{grid-template-columns:1fr}
-  .stats-row{flex-wrap:wrap}
+  .stats-row{flex-wrap:wrap;gap:10px}
+  .stat-card{min-width:calc(50% - 5px);flex:1 1 calc(50% - 5px)}
+  .page-title{font-size:20px}
+  .page-subtitle{font-size:13px}
+  table{font-size:13px}
+  td,th{padding:8px}
+  .actions-cell{flex-wrap:wrap;gap:4px}
+  .card{padding:18px}
+}
+@media(max-width:480px){
+  .stat-card{min-width:calc(50% - 5px)}
+  .mobile-header{padding:0 14px}
 }
 </style>
 </head>
 <body>
 
+<!-- Mobile header -->
+<header class="mobile-header">
+  <div class="mobile-brand">CCC.</div>
+  <button class="hamburger" id="menuToggle" aria-label="Open menu">&#9776;</button>
+</header>
+
+<!-- Overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 <!-- Sidebar -->
-<aside class="sidebar">
+<aside class="sidebar" id="sidebar">
   <div>
     <div class="brand">CCC.</div>
     <div class="brand-sub">Admin Panel</div>
@@ -476,6 +507,18 @@ tr:hover td{background:rgba(56,189,248,.03)}
     <?php endif ?>
   </div>
 </main>
+
+<script>
+(function(){
+  var toggle  = document.getElementById('menuToggle');
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('sidebarOverlay');
+  function open()  { sidebar.classList.add('open'); overlay.classList.add('open'); toggle.innerHTML='&#10005;'; }
+  function close() { sidebar.classList.remove('open'); overlay.classList.remove('open'); toggle.innerHTML='&#9776;'; }
+  toggle.addEventListener('click', function(){ sidebar.classList.contains('open') ? close() : open(); });
+  overlay.addEventListener('click', close);
+})();
+</script>
 
 </body>
 </html>

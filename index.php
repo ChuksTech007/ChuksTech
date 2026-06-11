@@ -706,8 +706,8 @@ try {
     /* ===== RESPONSIVE ===== */
     @media (max-width: 991px) {
       #hero { padding-top: 120px; }
-      .hero-img-wrap { margin-top: 48px; overflow: visible; }
-      .hero-photo { max-width: 300px; height: 340px; }
+      .hero-img-wrap { margin-top: 48px; max-width: 340px; margin-left: auto; margin-right: auto; }
+      .hero-photo { height: 380px; }
       .hero-badge { bottom: -14px; left: 0; }
       .hero-stat-wrap { top: 20px; right: 8px; }
       .ft-socials { justify-content: flex-start; margin-top: 16px; }
@@ -716,6 +716,8 @@ try {
     @media (max-width: 576px) {
       section { padding: 70px 0; }
       .form-box { padding: 24px 18px; }
+      .hero-img-wrap { max-width: 100%; }
+      .hero-photo { height: 340px; }
       .hero-stat-wrap { top: 12px; right: 8px; padding: 10px 14px; }
       .hero-stat-wrap strong { font-size: 18px; }
     }
