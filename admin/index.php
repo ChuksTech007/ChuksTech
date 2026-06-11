@@ -132,7 +132,7 @@ $projects = $repo->findPage($per_page, $offset);
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
 /* Sidebar */
-.sidebar{position:fixed;top:0;left:0;width:220px;height:100vh;background:var(--bg2);border-right:1px solid var(--border);padding:28px 20px;display:flex;flex-direction:column;z-index:100}
+.sidebar{position:fixed;top:0;left:0;width:220px;height:100vh;background:var(--bg2);border-right:1px solid var(--border);padding:28px 20px;display:flex;flex-direction:column;z-index:100;overflow-y:auto}
 .brand{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
 .brand-sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:32px}
 .nav-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--muted);font-size:14px;font-weight:500;text-decoration:none;margin-bottom:4px;transition:all .2s}
@@ -228,9 +228,18 @@ tr:hover td{background:rgba(56,189,248,.03)}
 /* Responsive tweaks */
 @media(max-width:768px){
   .mobile-header{display:flex}
-  .sidebar{transform:translateX(-100%);transition:transform .28s cubic-bezier(.4,0,.2,1);top:0;z-index:160}
+  .sidebar{
+    transform:translateX(-100%);
+    transition:transform .28s cubic-bezier(.4,0,.2,1);
+    top:60px;
+    height:calc(100vh - 60px);
+    height:calc(100svh - 60px);
+    overflow-y:auto;
+    z-index:160
+  }
   .sidebar.open{transform:translateX(0)}
-  .main{margin-left:0;padding:80px 16px 24px}
+  .sidebar-overlay{top:60px}
+  .main{margin-left:0;padding:80px 16px 32px}
   .form-grid{grid-template-columns:1fr}
   .stats-row{flex-wrap:wrap;gap:10px}
   .stat-card{min-width:calc(50% - 5px);flex:1 1 calc(50% - 5px)}
