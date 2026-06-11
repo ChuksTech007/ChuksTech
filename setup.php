@@ -6,6 +6,11 @@
  * Delete this file after setup is complete.
  */
 
+// ── Autoloader ─────────────────────────────────────────────────────────────────
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
+
 // ── Load .env ──────────────────────────────────────────────────────────────────
 $envFile = __DIR__ . '/.env';
 if (file_exists($envFile)) {
