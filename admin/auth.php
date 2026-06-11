@@ -4,7 +4,7 @@ require_once __DIR__ . '/config.php';
 function requireLogin(): void {
     if (session_status() === PHP_SESSION_NONE) session_start();
     if (empty($_SESSION['admin_logged_in'])) {
-        header('Location: /iPortfolio/admin/login.php');
+        header('Location: /admin/login.php');
         exit;
     }
 }
@@ -24,6 +24,6 @@ function logout(): void {
     if (session_status() === PHP_SESSION_NONE) session_start();
     $_SESSION = [];
     session_destroy();
-    header('Location: /iPortfolio/admin/login.php');
+    header('Location: /admin/login.php');
     exit;
 }

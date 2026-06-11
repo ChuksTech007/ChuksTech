@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (move_uploaded_file($_FILES['image']['tmp_name'], $dest)) {
                         $image_path = UPLOAD_URL . $fname;
                     } else {
-                        $message = 'File upload failed — check uploads/ directory permissions.';
+                        $message = 'File upload failed, check uploads/ directory permissions.';
                         $messageType = 'error';
                     }
                 } else {
@@ -118,7 +118,7 @@ $projects = $repo->findPage($per_page, $offset);
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard — CC. Portfolio</title>
+<title>Admin Dashboard, CCC. Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 <style>
@@ -230,12 +230,12 @@ tr:hover td{background:rgba(56,189,248,.03)}
 <!-- Sidebar -->
 <aside class="sidebar">
   <div>
-    <div class="brand">CC.</div>
+    <div class="brand">CCC.</div>
     <div class="brand-sub">Admin Panel</div>
-    <a href="/iPortfolio/admin/index.php" class="nav-link active">
+    <a href="/admin/index.php" class="nav-link active">
       <i class="bi bi-grid-fill"></i><span>Projects</span>
     </a>
-    <a href="/iPortfolio/index.php" target="_blank" class="nav-link">
+    <a href="/" target="_blank" class="nav-link">
       <i class="bi bi-eye"></i><span>View Portfolio</span>
     </a>
   </div>
@@ -244,7 +244,7 @@ tr:hover td{background:rgba(56,189,248,.03)}
       <div class="user-avatar">CC</div>
       <span class="user-name">Admin</span>
     </div>
-    <a href="/iPortfolio/admin/logout.php" class="logout-btn">
+    <a href="/admin/logout.php" class="logout-btn">
       <i class="bi bi-box-arrow-left"></i><span>Logout</span>
     </a>
   </div>
@@ -254,14 +254,14 @@ tr:hover td{background:rgba(56,189,248,.03)}
 <main class="main">
   <div class="page-header">
     <div class="page-title">Projects</div>
-    <div class="page-subtitle">Manage your portfolio projects — add, edit visibility, reorder, and delete.</div>
+    <div class="page-subtitle">Manage your portfolio projects, add, edit visibility, reorder, and delete.</div>
   </div>
 
   <?php if ($message): ?>
     <div class="alert alert-<?= $messageType ?>"><?= htmlspecialchars($message) ?></div>
   <?php endif ?>
 
-  <!-- Stats row — counts across ALL projects, not just current page -->
+  <!-- Stats row, counts across ALL projects, not just current page -->
   <?php
     $stats      = $repo->stats();
     $stat_total   = $stats['total'];
@@ -317,7 +317,7 @@ tr:hover td{background:rgba(56,189,248,.03)}
             <div class="file-label"><i class="bi bi-upload"></i> Choose screenshot / image…</div>
             <input type="file" name="image" accept="image/*" onchange="document.querySelector('.file-label').textContent = this.files[0]?.name || 'Choose screenshot / image…'">
           </div>
-          <div class="or-divider">— or paste a path/URL instead —</div>
+          <div class="or-divider">— or paste a path/URL instead,</div>
           <input type="text" name="image_url" placeholder="assets/img/portfolio/Screenshot (xxx).png">
           <span class="hint">Upload takes priority if both are provided.</span>
         </div>
@@ -389,7 +389,7 @@ tr:hover td{background:rgba(56,189,248,.03)}
             <td class="id-col"><?= $p['id'] ?></td>
             <td>
               <?php if ($p['image']): ?>
-                <img src="<?= htmlspecialchars(str_starts_with($p['image'], 'http') ? $p['image'] : '/iPortfolio/' . $p['image']) ?>" class="thumb" alt="">
+                <img src="<?= htmlspecialchars(str_starts_with($p['image'], 'http') ? $p['image'] : '/' . $p['image']) ?>" class="thumb" alt="">
               <?php else: ?>
                 <div class="thumb-placeholder"><i class="bi bi-image" style="font-size:18px"></i></div>
               <?php endif ?>

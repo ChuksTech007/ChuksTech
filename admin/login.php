@@ -3,7 +3,7 @@ require_once __DIR__ . '/auth.php';
 
 if (session_status() === PHP_SESSION_NONE) session_start();
 if (!empty($_SESSION['admin_logged_in'])) {
-    header('Location: /iPortfolio/admin/index.php');
+    header('Location: /admin/index.php');
     exit;
 }
 
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = trim($_POST['username'] ?? '');
     $pass = $_POST['password'] ?? '';
     if (attemptLogin($user, $pass)) {
-        header('Location: /iPortfolio/admin/index.php');
+        header('Location: /admin/index.php');
         exit;
     }
     $error = 'Invalid username or password.';
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Login — CC. Portfolio</title>
+<title>Admin Login, CCC. Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -45,7 +45,7 @@ input:focus{border-color:var(--accent)}
 </head>
 <body>
 <div class="login-card">
-  <div class="brand">CC.</div>
+  <div class="brand">CCC.</div>
   <div class="subtitle">Portfolio Admin Panel</div>
 
   <?php if ($error): ?>
@@ -63,7 +63,7 @@ input:focus{border-color:var(--accent)}
     </div>
     <button type="submit" class="btn-login">Sign In</button>
   </form>
-  <a href="/iPortfolio/index.php" class="back">← Back to Portfolio</a>
+  <a href="/" class="back">← Back to Portfolio</a>
 </div>
 </body>
 </html>
