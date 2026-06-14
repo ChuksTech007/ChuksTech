@@ -668,7 +668,7 @@ try {
 
     /* ===== WHATSAPP FLOAT ===== */
     .wa-float {
-      position: fixed; bottom: 26px; right: 26px; z-index: 999;
+      position: fixed; bottom: 26px; left: 26px; z-index: 999;
       width: 54px; height: 54px; background: #25d366;
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 6px 24px rgba(37,211,102,0.45);
@@ -776,7 +776,7 @@ try {
           </p>
           <div class="hero-btns">
             <a href="#portfolio" class="btn-grad"><i class="bi bi-grid-3x3-gap-fill"></i> View My Work</a>
-            <a href="FE_CV.pdf" download class="btn-out"><i class="bi bi-download"></i> Download CV</a>
+            <a href="Charles_Chukwudi_CV.pdf" download class="btn-out"><i class="bi bi-download"></i> Download CV</a>
           </div>
           <div class="hero-socials">
             <a href="http://www.twitter.com/ChuksTech_" target="_blank" title="Twitter/X"><i class="bi bi-twitter-x"></i></a>
@@ -908,13 +908,13 @@ try {
       <div class="row gy-4">
         <div class="col-lg-3 col-6" data-aos="fade-up" data-aos-delay="100">
           <div class="stat-box">
-            <div class="stat-num"><span data-purecounter-start="0" data-purecounter-end="20" data-purecounter-duration="1" class="purecounter"></span>+</div>
+            <div class="stat-num"><span data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="1" class="purecounter"></span>+</div>
             <div class="stat-lbl">Students Mentored</div>
           </div>
         </div>
         <div class="col-lg-3 col-6" data-aos="fade-up" data-aos-delay="150">
           <div class="stat-box">
-            <div class="stat-num"><span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="1" class="purecounter"></span>+</div>
+            <div class="stat-num"><span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>+</div>
             <div class="stat-lbl">Projects Delivered</div>
           </div>
         </div>
@@ -926,7 +926,7 @@ try {
         </div>
         <div class="col-lg-3 col-6" data-aos="fade-up" data-aos-delay="250">
           <div class="stat-box">
-            <div class="stat-num"><span data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="1" class="purecounter"></span>+</div>
+            <div class="stat-num"><span data-purecounter-start="0" data-purecounter-end="4" data-purecounter-duration="1" class="purecounter"></span>+</div>
             <div class="stat-lbl">Years Experience</div>
           </div>
         </div>
