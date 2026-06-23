@@ -28,13 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
                 $ftype   = mime_content_type($_FILES['image']['tmp_name']);
                 if (in_array($ftype, $allowed, true)) {
-                    $ext   = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-                    $fname = 'proj_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . strtolower($ext);
-                    $dest  = UPLOAD_DIR . $fname;
-                    if (move_uploaded_file($_FILES['image']['tmp_name'], $dest)) {
-                        $image_path = UPLOAD_URL . $fname;
+                    $url = uploadToCloudinary($_FILES['image']['tmp_name']);
+                    if ($url) {
+                        $image_path = $url;
                     } else {
-                        $message = 'File upload failed, check uploads/ directory permissions.';
+                        $message = 'Cloudinary upload failed — check CLOUDINARY_* env vars on Render.';
                         $messageType = 'error';
                     }
                 } else {

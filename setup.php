@@ -66,7 +66,7 @@ if ($useMongo) {
             $col->insertMany($docs);
             echo "<p style='color:#34d399'>&#10003; Seeded " . count($docs) . " projects into MongoDB.</p>";
         } else {
-            echo "<p style='color:#fbbf24'>&#9888; MongoDB collection already has data ($count documents) — skipping seed.</p>";
+            echo "<p style='color:#fbbf24'>&#9888; MongoDB collection already has data ($count documents), skipping seed.</p>";
         }
         echo "<p style='color:#34d399'>&#10003; MongoDB database <strong>iportfolio_db</strong> is ready.</p>";
         echo "<p style='color:#34d399'>&#10003; Collection <strong>projects</strong> is ready.</p>";
@@ -112,7 +112,7 @@ if ($useMongo) {
             }
             echo "<p style='color:#34d399'>&#10003; Seeded " . count($seed) . " projects into MySQL.</p>";
         } else {
-            echo "<p style='color:#fbbf24'>&#9888; MySQL table already has data — skipping seed.</p>";
+            echo "<p style='color:#fbbf24'>&#9888; MySQL table already has data, skipping seed.</p>";
         }
         echo "<p style='color:#34d399'>&#10003; MySQL database <strong>iportfolio_db</strong> is ready.</p>";
         echo "<p style='color:#34d399'>&#10003; Table <strong>projects</strong> is ready.</p>";

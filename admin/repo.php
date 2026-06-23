@@ -1,6 +1,6 @@
 <?php
 /**
- * ProjectRepo — thin abstraction over MySQL (PDO) or MongoDB.
+ * ProjectRepo, thin abstraction over MySQL (PDO) or MongoDB.
  * Automatically picks MongoDB when MONGODB_URI env var is set,
  * otherwise falls back to MySQL via getPDO().
  */
