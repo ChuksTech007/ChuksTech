@@ -116,6 +116,63 @@ class ProjectRepo {
         ]);
     }
 
+    public function findById(string $id): ?array {
+        if ($this->isMongo()) {
+            $doc = $this->col->findOne(
+                ['_id' => new \MongoDB\BSON\ObjectId($id)],
+                ['typeMap' => ['root' => 'array', 'document' => 'array']]
+            );
+            if (!$doc) return null;
+            $doc['id'] = (string)$doc['_id'];
+            return $doc;
+        }
+        $st = $this->pdo->prepare("SELECT * FROM projects WHERE id = ?");
+        $st->execute([(int)$id]);
+        return $st->fetch() ?: null;
+    }
+
+    public function update(string $id, array $data): void {
+        if ($this->isMongo()) {
+            $set = [
+                'title'       => $data['title'],
+                'category'    => $data['category'],
+                'description' => $data['description'],
+                'live_url'    => $data['live_url'],
+                'github_url'  => $data['github_url'],
+                'tags'        => $data['tags'],
+                'is_visible'  => (bool)$data['is_visible'],
+                'sort_order'  => (int)$data['sort_order'],
+            ];
+            if (array_key_exists('image', $data)) $set['image'] = $data['image'];
+            $this->col->updateOne(
+                ['_id' => new \MongoDB\BSON\ObjectId($id)],
+                ['$set' => $set]
+            );
+            return;
+        }
+        if (array_key_exists('image', $data)) {
+            $this->pdo->prepare("
+                UPDATE projects
+                SET title=?,category=?,description=?,image=?,live_url=?,github_url=?,tags=?,is_visible=?,sort_order=?
+                WHERE id=?
+            ")->execute([
+                $data['title'],$data['category'],$data['description'],$data['image'],
+                $data['live_url'],$data['github_url'],$data['tags'],
+                $data['is_visible']?1:0,(int)$data['sort_order'],(int)$id
+            ]);
+        } else {
+            $this->pdo->prepare("
+                UPDATE projects
+                SET title=?,category=?,description=?,live_url=?,github_url=?,tags=?,is_visible=?,sort_order=?
+                WHERE id=?
+            ")->execute([
+                $data['title'],$data['category'],$data['description'],
+                $data['live_url'],$data['github_url'],$data['tags'],
+                $data['is_visible']?1:0,(int)$data['sort_order'],(int)$id
+            ]);
+        }
+    }
+
     public function delete(string $id): void {
         if ($this->isMongo()) {
             $this->col->deleteOne(['_id' => new \MongoDB\BSON\ObjectId($id)]);

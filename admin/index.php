@@ -64,6 +64,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    // UPDATE PROJECT
+    if ($action === 'update') {
+        $id          = trim($_POST['id']          ?? '');
+        $title       = trim($_POST['title']       ?? '');
+        $category    = trim($_POST['category']    ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $live_url    = trim($_POST['live_url']    ?? '');
+        $github_url  = trim($_POST['github_url']  ?? '');
+        $tags        = trim($_POST['tags']        ?? '');
+        $is_visible  = isset($_POST['is_visible']);
+        $sort_order  = (int)($_POST['sort_order'] ?? 0);
+
+        if ($id && $title && $category) {
+            $data = compact('title','category','description','live_url','github_url','tags','is_visible','sort_order');
+
+            if (!empty($_FILES['image']['name'])) {
+                $allowed = ['image/jpeg','image/png','image/gif','image/webp'];
+                $ftype   = mime_content_type($_FILES['image']['tmp_name']);
+                if (in_array($ftype, $allowed, true)) {
+                    $result = uploadToCloudinary($_FILES['image']['tmp_name']);
+                    if (isset($result['url'])) {
+                        $data['image'] = $result['url'];
+                    } else {
+                        $message = $result['error'] ?? 'Cloudinary upload failed.';
+                        $messageType = 'error';
+                    }
+                } else {
+                    $message = 'Invalid file type. Only JPG, PNG, GIF, WebP allowed.';
+                    $messageType = 'error';
+                }
+            } elseif (!empty($_POST['image_url'])) {
+                $data['image'] = trim($_POST['image_url']);
+            }
+            // No new image = keep existing (don't set 'image' key)
+
+            if (!$message) {
+                $repo->update($id, $data);
+                $message = "Project \"{$title}\" updated.";
+                $messageType = 'success';
+            }
+        } else {
+            $message = 'Title and category are required.';
+            $messageType = 'error';
+        }
+    }
+
     // DELETE PROJECT
     if ($action === 'delete') {
         $id = trim($_POST['id'] ?? '');
@@ -252,6 +298,16 @@ tr:hover td{background:rgba(56,189,248,.03)}
   .stat-card{min-width:calc(50% - 5px)}
   .mobile-header{padding:0 14px}
 }
+
+/* Edit modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:720px;max-height:90vh;overflow-y:auto}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-title{font-size:16px;font-weight:700;color:var(--text)}
+.modal-close{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1;padding:0}
+.modal-close:hover{color:var(--text)}
+.img-preview{width:100%;max-height:140px;object-fit:cover;border-radius:8px;border:1px solid var(--border);margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -464,6 +520,22 @@ tr:hover td{background:rgba(56,189,248,.03)}
             </td>
             <td>
               <div class="actions-cell">
+                <!-- Edit -->
+                <button type="button" class="btn btn-sm btn-warn" title="Edit"
+                  onclick="openEdit(<?= htmlspecialchars(json_encode([
+                    'id'          => $p['id'],
+                    'title'       => $p['title'],
+                    'category'    => $p['category'],
+                    'description' => $p['description'] ?? '',
+                    'image'       => $p['image'] ?? '',
+                    'live_url'    => $p['live_url'] ?? '',
+                    'github_url'  => $p['github_url'] ?? '',
+                    'tags'        => $p['tags'] ?? '',
+                    'sort_order'  => $p['sort_order'] ?? 0,
+                    'is_visible'  => (bool)$p['is_visible'],
+                  ]), ENT_QUOTES) ?>)">
+                  <i class="bi bi-pencil"></i>
+                </button>
                 <!-- Toggle visibility -->
                 <form method="POST" style="display:inline">
                   <input type="hidden" name="action" value="toggle">
@@ -525,7 +597,105 @@ tr:hover td{background:rgba(56,189,248,.03)}
   toggle.addEventListener('click', function(){ sidebar.classList.contains('open') ? close() : open(); });
   overlay.addEventListener('click', close);
 })();
+
+var _editOverlay = document.getElementById('editOverlay');
+
+function openEdit(p) {
+  document.getElementById('edit_id').value          = p.id;
+  document.getElementById('edit_title').value       = p.title;
+  document.getElementById('edit_category').value    = p.category;
+  document.getElementById('edit_description').value = p.description;
+  document.getElementById('edit_live_url').value    = p.live_url;
+  document.getElementById('edit_github_url').value  = p.github_url;
+  document.getElementById('edit_tags').value        = p.tags;
+  document.getElementById('edit_sort_order').value  = p.sort_order;
+  document.getElementById('edit_is_visible').checked = p.is_visible;
+  document.getElementById('edit_image_url').value   = '';
+  var preview = document.getElementById('edit_img_preview');
+  if (p.image) {
+    preview.src = p.image.startsWith('http') ? p.image : '/' + p.image;
+    preview.style.display = 'block';
+  } else {
+    preview.style.display = 'none';
+  }
+  document.getElementById('edit_file_label').textContent = 'Choose new image to replace…';
+  _editOverlay.classList.add('open');
+}
+
+function closeEdit(e) {
+  if (!e || e.target === _editOverlay) _editOverlay.classList.remove('open');
+}
 </script>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editOverlay" onclick="closeEdit(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title"><i class="bi bi-pencil-square" style="color:var(--warn);margin-right:6px"></i>Edit Project</div>
+      <button class="modal-close" onclick="closeEdit()">&times;</button>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="action" value="update">
+      <input type="hidden" name="id" id="edit_id">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Project Title *</label>
+          <input type="text" name="title" id="edit_title" required>
+        </div>
+        <div class="form-group">
+          <label>Category *</label>
+          <select name="category" id="edit_category" required>
+            <?php foreach ($categories as $cat): ?>
+              <option value="<?= $cat ?>"><?= ucwords(str_replace('-', ' ', $cat)) ?></option>
+            <?php endforeach ?>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Description</label>
+          <textarea name="description" id="edit_description"></textarea>
+        </div>
+        <div class="form-group full">
+          <label>Project Image</label>
+          <img id="edit_img_preview" class="img-preview" src="" alt="" style="display:none">
+          <div class="file-input-wrap">
+            <div class="file-label" id="edit_file_label"><i class="bi bi-upload"></i> Choose new image to replace…</div>
+            <input type="file" name="image" accept="image/*"
+              onchange="document.getElementById('edit_file_label').textContent = this.files[0]?.name || 'Choose new image to replace…'">
+          </div>
+          <div class="or-divider">— or paste a URL instead</div>
+          <input type="text" name="image_url" id="edit_image_url" placeholder="https://… (leave blank to keep current image)">
+          <span class="hint">Leave both empty to keep the existing image.</span>
+        </div>
+        <div class="form-group">
+          <label>Live URL</label>
+          <input type="url" name="live_url" id="edit_live_url">
+        </div>
+        <div class="form-group">
+          <label>GitHub URL</label>
+          <input type="url" name="github_url" id="edit_github_url">
+        </div>
+        <div class="form-group">
+          <label>Tech Tags</label>
+          <input type="text" name="tags" id="edit_tags" placeholder="Node.js,Express.js,MongoDB (comma separated)">
+        </div>
+        <div class="form-group">
+          <label>Sort Order</label>
+          <input type="number" name="sort_order" id="edit_sort_order" min="0">
+        </div>
+        <div class="form-group full">
+          <div class="check-group">
+            <input type="checkbox" name="is_visible" id="edit_is_visible">
+            <label for="edit_is_visible">Visible on portfolio</label>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> Save Changes</button>
+        <button type="button" class="btn btn-ghost" onclick="closeEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 </body>
 </html>
