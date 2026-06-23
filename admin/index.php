@@ -598,19 +598,17 @@ tr:hover td{background:rgba(56,189,248,.03)}
   overlay.addEventListener('click', close);
 })();
 
-var _editOverlay = document.getElementById('editOverlay');
-
 function openEdit(p) {
-  document.getElementById('edit_id').value          = p.id;
-  document.getElementById('edit_title').value       = p.title;
-  document.getElementById('edit_category').value    = p.category;
-  document.getElementById('edit_description').value = p.description;
-  document.getElementById('edit_live_url').value    = p.live_url;
-  document.getElementById('edit_github_url').value  = p.github_url;
-  document.getElementById('edit_tags').value        = p.tags;
-  document.getElementById('edit_sort_order').value  = p.sort_order;
+  document.getElementById('edit_id').value           = p.id;
+  document.getElementById('edit_title').value        = p.title;
+  document.getElementById('edit_category').value     = p.category;
+  document.getElementById('edit_description').value  = p.description;
+  document.getElementById('edit_live_url').value     = p.live_url;
+  document.getElementById('edit_github_url').value   = p.github_url;
+  document.getElementById('edit_tags').value         = p.tags;
+  document.getElementById('edit_sort_order').value   = p.sort_order;
   document.getElementById('edit_is_visible').checked = p.is_visible;
-  document.getElementById('edit_image_url').value   = '';
+  document.getElementById('edit_image_url').value    = '';
   var preview = document.getElementById('edit_img_preview');
   if (p.image) {
     preview.src = p.image.startsWith('http') ? p.image : '/' + p.image;
@@ -619,11 +617,12 @@ function openEdit(p) {
     preview.style.display = 'none';
   }
   document.getElementById('edit_file_label').textContent = 'Choose new image to replace…';
-  _editOverlay.classList.add('open');
+  document.getElementById('editOverlay').classList.add('open');
 }
 
 function closeEdit(e) {
-  if (!e || e.target === _editOverlay) _editOverlay.classList.remove('open');
+  var overlay = document.getElementById('editOverlay');
+  if (!e || e.target === overlay) overlay.classList.remove('open');
 }
 </script>
 
