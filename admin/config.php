@@ -29,14 +29,22 @@ define('UPLOAD_URL', '/admin/uploads/');
 
 /**
  * Upload an image file to Cloudinary and return its secure_url.
- * Returns null if credentials are missing or the upload fails.
+ * Returns ['url' => string] on success or ['error' => string] on failure.
  */
-function uploadToCloudinary(string $tmpFile): ?string {
+function uploadToCloudinary(string $tmpFile): array {
     $cloudName = getenv('CLOUDINARY_CLOUD_NAME');
     $apiKey    = getenv('CLOUDINARY_API_KEY');
     $apiSecret = getenv('CLOUDINARY_API_SECRET');
 
-    if (!$cloudName || !$apiKey || !$apiSecret) return null;
+    if (!$cloudName || $cloudName === 'your_cloud_name') {
+        return ['error' => 'CLOUDINARY_CLOUD_NAME is not set on Render.'];
+    }
+    if (!$apiKey) {
+        return ['error' => 'CLOUDINARY_API_KEY is not set on Render.'];
+    }
+    if (!$apiSecret) {
+        return ['error' => 'CLOUDINARY_API_SECRET is not set on Render.'];
+    }
 
     $timestamp = time();
     $folder    = 'portfolio';
@@ -56,9 +64,19 @@ function uploadToCloudinary(string $tmpFile): ?string {
             'signature' => $signature,
         ],
     ]);
-    $result = curl_exec($ch);
+    $result   = curl_exec($ch);
+    $curlErr  = curl_error($ch);
     curl_close($ch);
 
+    if ($curlErr) {
+        return ['error' => 'cURL error: ' . $curlErr];
+    }
+
     $data = json_decode($result, true);
-    return $data['secure_url'] ?? null;
+    if (!empty($data['secure_url'])) {
+        return ['url' => $data['secure_url']];
+    }
+
+    $apiError = $data['error']['message'] ?? $result;
+    return ['error' => 'Cloudinary API error: ' . $apiError];
 }

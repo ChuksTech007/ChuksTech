@@ -28,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
                 $ftype   = mime_content_type($_FILES['image']['tmp_name']);
                 if (in_array($ftype, $allowed, true)) {
-                    $url = uploadToCloudinary($_FILES['image']['tmp_name']);
-                    if ($url) {
-                        $image_path = $url;
+                    $result = uploadToCloudinary($_FILES['image']['tmp_name']);
+                    if (isset($result['url'])) {
+                        $image_path = $result['url'];
                     } else {
-                        $message = 'Cloudinary upload failed — check CLOUDINARY_* env vars on Render.';
+                        $message = $result['error'] ?? 'Cloudinary upload failed.';
                         $messageType = 'error';
                     }
                 } else {
